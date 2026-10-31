@@ -16,7 +16,7 @@ Objetivo: CLI Python que detecta duplicados exactos, por ISRC y fuzzy, y borra d
 - T1 [S1,S2] route:inline status:done RED/GREEN: ModuleNotFoundError RED -> 7 passed GREEN — lógica pura normalize + agrupado ISRC/fuzzy + tests pytest
 - T2 [S1] route:inline status:done — cliente Spotify paginado GET /playlists/{id}/items + auth OAuth
 - T3 [S3,S4] route:inline status:done — CLI dry-run/backup/borrado por positions en lotes 100 + README/.env.example/requirements
-- T4 [S1,S2,S3] route:inline status:doing — verificación focused + suite + spot-check
+- T4 [S1,S2,S3] route:inline status:done — verificación focused + suite + spot-check: pytest 12 passed, CLI --help exit 0, verifier sin blockers (S1 pass, S2 pass, S3 pass logic, S4 partial sin git -> resuelto con init). Commits: ee8e6c5 feat, 2082ade chore.
 
 ## Log
 
