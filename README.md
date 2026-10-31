@@ -8,9 +8,19 @@ title + artists + duration, so those cases are detected.
 
 ## Setup
 
-1. Create an app at https://developer.spotify.com/dashboard
-   - Redirect URI: `http://127.0.0.1:8888/callback` (Spotify no longer allows `localhost`, use `127.0.0.1`; type it and press `Add`)
-2. Copy env file and fill it:
+1. Create an app at https://developer.spotify.com/dashboard → `Create app`:
+   - `App name`: e.g. `playlist-dedup-helper` (must NOT start with `Spot`)
+   - `App description`: e.g. `Find and remove duplicate tracks, keeping one copy`
+   - `Website`: `https://github.com/rafaeldavidgg/spotify-playlist-dedup`
+   - `Redirect URIs`: type `http://127.0.0.1:8888/callback` and press `Add`
+     (it must appear in the list below; `localhost` is rejected by Spotify —
+     use `127.0.0.1`)
+   - Under `Which API/SDKs are you planning to use?` check `Web API`
+   - Check `I understand and agree with Spotify's Developer Terms of Service
+     and Design Guidelines`, then `Save`
+2. Open your new app → `Settings` → copy `Client ID` and `Client Secret`.
+3. Copy env file and fill it with those values
+   (make sure `SPOTIFY_REDIRECT_URI` is exactly the URI you added above):
 
 ```powershell
 Copy-Item .env.example .env
