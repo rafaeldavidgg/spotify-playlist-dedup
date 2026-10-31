@@ -9,7 +9,7 @@ title + artists + duration, so those cases are detected.
 ## Setup
 
 1. Create an app at https://developer.spotify.com/dashboard
-   - Redirect URI: `http://localhost:8888/callback`
+   - Redirect URI: `http://127.0.0.1:8888/callback` (Spotify no longer allows `localhost`, use `127.0.0.1`; type it and press `Add`)
 2. Copy env file and fill it:
 
 ```powershell
