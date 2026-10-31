@@ -51,7 +51,8 @@ python -m spotify_dedup --playlist <playlist-id-or-url> --apply --yes
 Options:
 
 - `--tolerance-ms 2500` duration tolerance for fuzzy matching
-- `--market ES` optional market code
+- `--market from_token` uses your account country (default). If tracks come back
+  empty, retry with `--market ES` (or your country code).
 - `--backup backup.json` custom backup path
 
 Removal uses `uri + positions` in batches of 100, so only duplicate

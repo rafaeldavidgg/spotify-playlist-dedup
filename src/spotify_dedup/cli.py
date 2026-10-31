@@ -36,7 +36,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=2500,
         help="Duration tolerance for fuzzy matching (default 2500).",
     )
-    p.add_argument("--market", default=None, help="Optional market code, e.g. ES.")
+    p.add_argument(
+        "--market",
+        default="from_token",
+        help="Market code, e.g. ES, or from_token (default) to use your account country.",
+    )
     p.add_argument(
         "--backup",
         default="",
@@ -53,6 +57,13 @@ def main(argv: list[str] | None = None) -> int:
     print(f"Fetching playlist {playlist_id} ...")
     tracks = fetch_all_playlist_tracks(sp, playlist_id, market=args.market)
     print(f"Total tracks: {len(tracks)}")
+    unplayable = sum(1 for t in tracks if t.get("unplayable"))
+    if unplayable:
+        print(
+            f"Warning: {unplayable}/{len(tracks)} tracks came back empty "
+            f"(market={args.market}). If everything is empty, retry with "
+            f"--market ES (or your country) or --market from_token."
+        )
 
     groups = find_duplicate_groups(tracks, duration_tolerance_ms=args.tolerance_ms)
     dup_count = sum(len(g["duplicates"]) for g in groups)

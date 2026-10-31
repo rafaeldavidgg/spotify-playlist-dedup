@@ -49,3 +49,29 @@ def test_remove_with_plan_batches_100():
     plan = [{"uri": f"u{i}", "positions": [i]} for i in range(250)]
     assert remove_with_plan(fake, "pid", plan) == 250
     assert [len(c) for c in fake.calls] == [100, 100, 50]
+
+
+def test_fetch_defaults_to_from_token_market():
+    from spotify_dedup.spotify import fetch_all_playlist_tracks
+
+    captured = {}
+    normal = {
+        "id": "abc",
+        "uri": "spotify:track:abc",
+        "name": "Yellow",
+        "artists": [{"name": "Coldplay"}],
+        "duration_ms": 266000,
+        "external_ids": {"isrc": "GB123"},
+        "album": {"name": "A"},
+        "type": "track",
+    }
+
+    class Fake:
+        def playlist_items(self, pid, limit=50, offset=0, additional_types=("track",), market=None):
+            captured["market"] = market
+            return {"items": [{"track": normal, "added_at": "2024-01-01T00:00:00Z"}], "next": None}
+
+    tracks = fetch_all_playlist_tracks(Fake(), "pid")
+    assert captured["market"] == "from_token"
+    assert tracks[0]["id"] == "abc"
+    assert tracks[0].get("unplayable") is None

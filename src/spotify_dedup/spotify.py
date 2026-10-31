@@ -42,8 +42,13 @@ def get_spotify_client():
     return Spotify(auth_manager=auth)
 
 
-def fetch_all_playlist_tracks(sp, playlist_id: str, market: str | None = None) -> list[dict]:
-    """Fetch every track in a playlist, handling pagination (limit 50)."""
+def fetch_all_playlist_tracks(sp, playlist_id: str, market: str | None = "from_token") -> list[dict]:
+    """Fetch every track in a playlist, handling pagination (limit 50).
+
+    market defaults to "from_token" so Spotify resolves availability against
+    the logged-in user's country. With market=None Spotify returns
+    track=None for everything (all items look "unplayable").
+    """
     tracks: list[dict] = []
     limit, offset = 50, 0
     position = 0
