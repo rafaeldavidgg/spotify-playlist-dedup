@@ -64,7 +64,9 @@ def fetch_all_playlist_tracks(sp, playlist_id: str, market: str | None = "from_t
         if not items:
             break
         for item in items:
-            tr = (item or {}).get("track") or {}
+            # NOTE: Get Playlist Items returns the object under `item`;
+            # `track` is deprecated and now comes back null. Read both.
+            tr = (item or {}).get("item") or (item or {}).get("track") or {}
             if tr.get("type") not in (None, "track"):
                 position += 1
                 continue
